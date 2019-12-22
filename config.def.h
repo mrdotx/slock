@@ -20,10 +20,19 @@ ResourcePref resources[] = {
 };
 
 /* treat a cleared input like a wrong password (color) */
-static const int failonclear = 0;
+static const int failonclear = 1;
+
+/* default message */
+static const char * message = "locked";
+
+/* text color */
+static const char * text_color = "#ffffff";
+
+/* text size (must be a valid size) */
+static const char * font_name = "fixed";
 
 /* time in seconds before the monitor shuts down */
-static const int monitortime = 5;
+static const int monitortime = 15;
 
 /* time in seconds to cancel lock with mouse movement */
 static const int timetocancel = 15;
