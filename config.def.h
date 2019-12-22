@@ -3,10 +3,10 @@ static const char *user  = "nobody";
 static const char *group = "nobody";
 
 static const char *colorname[NUMCOLS] = {
-	[INIT] =   "black",     /* after initialization */
-	[INPUT] =  "#3476a4",   /* during input */
+	[INIT] =   "#000000",   /* after initialization */
+	[INPUT] =  "#333333",   /* during input */
 	[FAILED] = "#ff5555",   /* wrong password */
-	[CAPS] =   "#ffff55",   /* capslock on */
+	[CAPS] =   "#3476a4",   /* capslock on */
 };
 
 /*
@@ -14,9 +14,9 @@ static const char *colorname[NUMCOLS] = {
  */
 ResourcePref resources[] = {
 		{ "color0",       STRING,  &colorname[INIT] },
-		{ "color10",      STRING,  &colorname[INPUT] },
+		{ "color8",       STRING,  &colorname[INPUT] },
 		{ "color9",       STRING,  &colorname[FAILED] },
-		{ "color11",      STRING,  &colorname[CAPS] },
+		{ "color10",      STRING,  &colorname[CAPS] },
 };
 
 /* treat a cleared input like a wrong password (color) */
