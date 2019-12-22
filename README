@@ -26,6 +26,7 @@ Simply invoke the 'slock' command. To get out of it, enter your password.
 Patches
 -------
 slock-dpms-1.4.diff
+slock-quickcancel-1.4.diff
 
 Last implemented commit
 -----------------------

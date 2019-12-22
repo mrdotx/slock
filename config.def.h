@@ -13,3 +13,6 @@ static const int failonclear = 0;
 
 /* time in seconds before the monitor shuts down */
 static const int monitortime = 5;
+
+/* time in seconds to cancel lock with mouse movement */
+static const int timetocancel = 15;
