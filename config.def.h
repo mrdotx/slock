@@ -32,7 +32,7 @@ static const char * text_color = "#ffffff";
 static const char * font_name = "fixed";
 
 /* time in seconds before the monitor shuts down */
-static const int monitortime = 10;
+static const int monitortime = 5;
 
 /* time in seconds to cancel lock with mouse movement */
 static const int timetocancel = 15;
