@@ -4,8 +4,8 @@ static const char *group = "nobody";
 
 static const char *colorname[NUMCOLS] = {
     [INIT] =   "#000000",   /* after initialization */
-    [INPUT] =  "#333333",   /* during input */
-    [FAILED] = "#ff5555",   /* wrong password */
+    [INPUT] =  "#3476a4",   /* during input */
+    [FAILED] = "#fe0000",   /* wrong password */
 };
 
 /*
@@ -13,8 +13,8 @@ static const char *colorname[NUMCOLS] = {
  */
 ResourcePref resources[] = {
         { "background",   STRING,  &colorname[INIT] },
-        { "color8",       STRING,  &colorname[INPUT] },
-        { "color9",       STRING,  &colorname[FAILED] },
+        { "color10",       STRING,  &colorname[INPUT] },
+        { "color1",       STRING,  &colorname[FAILED] },
 };
 
 /* treat a cleared input like a wrong password (color) */
