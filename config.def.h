@@ -13,7 +13,7 @@ static const char *colorname[NUMCOLS] = {
  */
 ResourcePref resources[] = {
         { "background",   STRING,  &colorname[INIT] },
-        { "color10",       STRING,  &colorname[INPUT] },
+        { "color10",      STRING,  &colorname[INPUT] },
         { "color1",       STRING,  &colorname[FAILED] },
 };
 
@@ -26,8 +26,8 @@ static const char * message = "locked";
 /* text color */
 static const char * text_color = "#ffffff";
 
-/* text size (must be a valid size) */
-static const char * font_name = "fixed";
+/* font name (must be a valid x11 front name) */
+static const char * font_name = "12x24";
 
 /* time in seconds before the monitor shuts down */
 static const int monitortime = 5;
