@@ -25,6 +25,7 @@ Simply invoke the 'slock' command. To get out of it, enter your password.
 
 Patches
 -------
+slock-git-20161012-control-clear.diff
 slock-dpms-1.4.diff
 slock-quickcancel-1.4.diff
 slock-xresources-20191126-53e56c7.diff
