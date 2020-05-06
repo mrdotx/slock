@@ -27,7 +27,7 @@ static const int controlkeyclear = 1;
 static const char * message = "locked";
 
 /* text color */
-static const char * text_color = "#ffffff";
+static const char * text_color = "#3476a4";
 
 /* font name (must be a valid x11 front name) */
 static const char * font_name = "12x24";
