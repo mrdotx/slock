@@ -9,16 +9,6 @@ static const char *colorname[NUMCOLS] = {
 	[CAPS] =   "#ffff55",   /* CapsLock on */
 };
 
-/*
- * Xresources preferences to load at startup
- */
-ResourcePref resources[] = {
-		{ "background",     STRING,  &colorname[INIT] },
-		{ "color10",        STRING,  &colorname[INPUT] },
-		{ "color1",         STRING,  &colorname[FAILED] },
-		{ "color11",        STRING,  &colorname[CAPS] },
-};
-
 /* treat a cleared input like a wrong password (color) */
 static const int failonclear = 1;
 
@@ -39,3 +29,14 @@ static const int monitortime = 15;
 
 /* time in seconds to cancel lock with mouse movement */
 static const int timetocancel = 15;
+
+/*
+ * Xresources preferences to load at startup
+ */
+ResourcePref resources[] = {
+		{ "background",     STRING,  &colorname[INIT] },
+		{ "color10",        STRING,  &colorname[INPUT] },
+		{ "color1",         STRING,  &colorname[FAILED] },
+		{ "color11",        STRING,  &colorname[CAPS] },
+		{ "color7",         STRING,  &text_color },
+};
