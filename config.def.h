@@ -4,7 +4,7 @@ static const char *group = "nobody";
 
 static const char *colorname[NUMCOLS] = {
 	[INIT] =   "#000000",   /* after initialization */
-	[INPUT] =  "#3476a4",   /* during input */
+	[INPUT] =  "#1f5393",   /* during input */
 	[FAILED] = "#fe0000",   /* wrong password */
 	[CAPS] =   "#ffff55",   /* CapsLock on */
 };
@@ -35,8 +35,8 @@ static const int timetocancel = 15;
  */
 ResourcePref resources[] = {
 		{ "background",     STRING,  &colorname[INIT] },
-		{ "color10",        STRING,  &colorname[INPUT] },
-		{ "color1",         STRING,  &colorname[FAILED] },
+		{ "color12",        STRING,  &colorname[INPUT] },
+		{ "color9",         STRING,  &colorname[FAILED] },
 		{ "color11",        STRING,  &colorname[CAPS] },
 		{ "color7",         STRING,  &text_color },
 };
