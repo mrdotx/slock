@@ -22,7 +22,7 @@ static const char * message = "locked";
 static const char * text_color = "#cccccc";
 
 /* font name (must be a valid x11 front name) */
-static const char * font_name = "12x24";
+static const char * font_name = "-misc-dejavu sans mono-medium-o-normal--0-0-0-0-m-0-iso8859-16";
 
 /* time in seconds before the monitor shuts down */
 static const int monitortime = 15;
@@ -34,9 +34,10 @@ static const int timetocancel = 15;
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
-		{ "background",     STRING,  &colorname[INIT] },
-		{ "color12",        STRING,  &colorname[INPUT] },
-		{ "color9",         STRING,  &colorname[FAILED] },
-		{ "color11",        STRING,  &colorname[CAPS] },
-		{ "color7",         STRING,  &text_color },
+		{ "slock.init",             STRING,  &colorname[INIT] },
+		{ "slock.input",            STRING,  &colorname[INPUT] },
+		{ "slock.failed",           STRING,  &colorname[FAILED] },
+		{ "slock.caps",             STRING,  &colorname[CAPS] },
+		{ "slock.message",          STRING,  &text_color },
+		{ "slock.message.font",     STRING,  &font_name },
 };
