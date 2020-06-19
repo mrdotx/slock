@@ -22,7 +22,7 @@ static const char * message = "locked";
 static const char * text_color = "#cccccc";
 
 /* font name (must be a valid x11 front name) */
-static const char * font_name = "-misc-dejavu sans mono-medium-o-normal--0-0-0-0-m-0-iso8859-16";
+static const char * font_name = "-misc-fixed-medium-r-normal--20-200-75-75-c-100-iso8859-1";
 
 /* time in seconds before the monitor shuts down */
 static const int monitortime = 15;
