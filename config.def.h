@@ -6,7 +6,6 @@ static const char *colorname[NUMCOLS] = {
 	[INIT] =   "#000000",   /* after initialization */
 	[INPUT] =  "#2b2b2b",   /* during input */
 	[FAILED] = "#df2800",   /* wrong password */
-	[CAPS] =   "#4185d7",   /* capslock on */
 };
 
 /* treat a cleared input like a wrong password (color) */
@@ -25,10 +24,10 @@ static const char * text_color = "#cccccc";
 static const char * font_name = "-misc-fixed-medium-r-normal--20-200-75-75-c-100-iso8859-1";
 
 /* time in seconds before the monitor shuts down */
-static const int monitortime = 15;
+static const int monitortime = 30;
 
 /* time in seconds to cancel lock with mouse movement */
-static const int timetocancel = 15;
+static const int timetocancel = 10;
 
 /*
  * Xresources preferences to load at startup
@@ -37,7 +36,6 @@ ResourcePref resources[] = {
 		{ "slock.init",             STRING,  &colorname[INIT] },
 		{ "slock.input",            STRING,  &colorname[INPUT] },
 		{ "slock.failed",           STRING,  &colorname[FAILED] },
-		{ "slock.caps",             STRING,  &colorname[CAPS] },
 		{ "slock.message",          STRING,  &text_color },
 		{ "slock.message.font",     STRING,  &font_name },
 };
