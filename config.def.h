@@ -6,7 +6,7 @@ static const char *colorname[NUMCOLS] = {
 	[INIT] =   "#000000",   /* after initialization */
 	[INPUT] =  "#2b2b2b",   /* during input */
 	[FAILED] = "#df2800",   /* wrong password */
-	[CAPS] =   "#effd5f",   /* capslock on */
+	[CAPS] =   "#4185d7",   /* capslock on */
 };
 
 /* treat a cleared input like a wrong password (color) */
@@ -19,7 +19,7 @@ static const int controlkeyclear = 1;
 static const char * message = "locked";
 
 /* text color */
-static const char * text_color = "#4185d7";
+static const char * text_color = "#cccccc";
 
 /* font name (must be a valid x11 front name) */
 static const char * font_name = "-misc-dejavu sans mono-medium-o-normal--0-0-0-0-m-0-iso8859-16";
