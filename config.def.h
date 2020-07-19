@@ -23,9 +23,6 @@ static const char * font_name = "-misc-fixed-medium-r-normal--20-200-75-75-c-100
 /* time in seconds before the monitor shuts down */
 static const int monitortime = 30;
 
-/* time in seconds to cancel lock with mouse movement */
-static const int timetocancel = 10;
-
 /*
  * Xresources preferences to load at startup
  */
