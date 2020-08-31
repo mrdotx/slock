@@ -1,0 +1,9 @@
+# path:       /home/klassiker/.local/share/repos/slock/.gitignore
+# author:     klassiker [mrdotx]
+# github:     https://github.com/mrdotx/slock
+# date:       2020-08-31T17:52:59+0200
+
+config.h
+explicit_bzero.o
+slock
+slock.o
