@@ -3,9 +3,9 @@ static const char *user  = "nobody";
 static const char *group = "nobody";
 
 static const char *colorname[NUMCOLS] = {
-	[INIT] =   "#000000",   /* after initialization */
-	[INPUT] =  "#2b2b2b",   /* during input */
-	[FAILED] = "#df2800",   /* wrong password */
+    [INIT] =   "#000000",   /* after initialization */
+    [INPUT] =  "#2b2b2b",   /* during input */
+    [FAILED] = "#df2800",   /* wrong password */
 };
 
 /* treat a cleared input like a wrong password (color) */
@@ -27,9 +27,9 @@ static const int monitortime = 20;
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
-		{ "slock.init",             STRING,  &colorname[INIT] },
-		{ "slock.input",            STRING,  &colorname[INPUT] },
-		{ "slock.failed",           STRING,  &colorname[FAILED] },
-		{ "slock.message",          STRING,  &text_color },
-		{ "slock.message.font",     STRING,  &font_name },
+        { "slock.init",             STRING,  &colorname[INIT] },
+        { "slock.input",            STRING,  &colorname[INPUT] },
+        { "slock.failed",           STRING,  &colorname[FAILED] },
+        { "slock.message",          STRING,  &text_color },
+        { "slock.message.font",     STRING,  &font_name },
 };
