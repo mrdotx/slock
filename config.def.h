@@ -27,9 +27,9 @@ static const int monitortime = 20;
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
-        { "slock.init",             STRING,  &colorname[INIT] },
-        { "slock.input",            STRING,  &colorname[INPUT] },
-        { "slock.failed",           STRING,  &colorname[FAILED] },
-        { "slock.message",          STRING,  &text_color },
-        { "slock.message.font",     STRING,  &font_name },
+        { "init",             STRING,  &colorname[INIT] },
+        { "input",            STRING,  &colorname[INPUT] },
+        { "failed",           STRING,  &colorname[FAILED] },
+        { "message",          STRING,  &text_color },
+        { "message.font",     STRING,  &font_name },
 };
