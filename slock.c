@@ -179,7 +179,8 @@ writemessage(Display *dpy, Window win, int screen)
 				j++;
 			}
 
-			XDrawString(dpy, win, gc, width + tab_size*tab_replace, height + 20*k, message + j, i - j);
+			XDrawString(dpy, win, gc, width + tab_size*tab_replace, \
+						height + 20*k + message_top, message + j, i - j);
 			while (i < len && message[i] == '\n') {
 				i++;
 				j = i;

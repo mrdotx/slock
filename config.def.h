@@ -11,6 +11,9 @@ static const char *colorname[NUMCOLS] = {
 /* treat a cleared input like a wrong password (color) */
 static const int failonclear = 0;
 
+/* add pixel from top to display message */
+static const int message_top = 0;
+
 /* default message */
 static const char * message = "locked";
 
