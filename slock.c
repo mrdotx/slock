@@ -106,7 +106,7 @@ dontkillme(void)
 static void
 writemessage(Display *dpy, Window win, int screen)
 {
-	int len, line_len, width, height, s_width, s_height, i, j, k, tab_replace, tab_size;
+	int len, line_len, width, height, s_width, s_height, s_pos_y, i, j, k, tab_replace, tab_size;
 	XGCValues gr_values;
 	XFontStruct *fontinfo;
 	XColor color, dummy;
@@ -161,12 +161,15 @@ writemessage(Display *dpy, Window win, int screen)
 		xsi = XineramaQueryScreens(dpy, &i);
 		s_width = xsi[0].width;
 		s_height = xsi[0].height;
+		s_pos_y = xsi[0].y_org;
+
 	} else {
 		s_width = DisplayWidth(dpy, screen);
 		s_height = DisplayHeight(dpy, screen);
+		s_pos_y = 0;
 	}
 
-	height = s_height*3/7 - (k*20)/3;
+	height = s_height*3/7 - (k*20)/3 + s_pos_y;
 	width  = (s_width - XTextWidth(fontinfo, message, line_len))/2;
 
 	/* Look for '\n' and print the text between them. */
@@ -180,7 +183,7 @@ writemessage(Display *dpy, Window win, int screen)
 			}
 
 			XDrawString(dpy, win, gc, width + tab_size*tab_replace, \
-						height + 20*k + message_top, message + j, i - j);
+						height + 20*k, message + j, i - j);
 			while (i < len && message[i] == '\n') {
 				i++;
 				j = i;
