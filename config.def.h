@@ -3,9 +3,10 @@ static const char *user  = "nobody";
 static const char *group = "nobody";
 
 static const char *colorname[NUMCOLS] = {
-    [INIT] =   "#000000",   /* after initialization */
-    [INPUT] =  "#2b2b2b",   /* during input */
-    [FAILED] = "#df2800",   /* wrong password */
+    [INIT] =        "#000000",  /* after initialization */
+    [INPUT] =       "#2b2b2b",  /* during input */
+    [INPUT_ALT] =   "#333333",  /* during input, second color*/
+    [FAILED] =      "#df2800",  /* wrong password */
 };
 
 /* treat a cleared input like a wrong password (color) */
@@ -27,9 +28,10 @@ static const int monitortime = 20;
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
-        { "init",             STRING,  &colorname[INIT] },
-        { "input",            STRING,  &colorname[INPUT] },
-        { "failed",           STRING,  &colorname[FAILED] },
-        { "message",          STRING,  &text_color },
-        { "message.font",     STRING,  &font_name },
+        { "init",           STRING, &colorname[INIT] },
+        { "input",          STRING, &colorname[INPUT] },
+        { "input.alt",      STRING, &colorname[INPUT_ALT] },
+        { "failed",         STRING, &colorname[FAILED] },
+        { "message",        STRING, &text_color },
+        { "message.font",   STRING, &font_name },
 };

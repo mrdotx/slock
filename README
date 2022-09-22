@@ -28,6 +28,7 @@ Patches
 slock-dpms-1.4.diff
 slock-message-20191002-b46028b.diff
 slock-xresources-20191126-53e56c7.diff
+slock-alternate-colors-20220921-35633d4.diff
 
 Last implemented commit
 -----------------------

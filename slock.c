@@ -34,6 +34,7 @@ int count_error = 0;
 enum {
 	INIT,
 	INPUT,
+	INPUT_ALT,
 	FAILED,
 	NUMCOLS
 };
@@ -301,7 +302,8 @@ readpw(Display *dpy, struct xrandr *rr, struct lock **locks, int nscreens,
 				}
 				break;
 			}
-			color = len ? INPUT : ((failure || failonclear) ? FAILED : INIT);
+			color = len ? (len%2 ? INPUT : INPUT_ALT)
+			            : ((failure || failonclear) ? FAILED : INIT);
 			if (running && oldc != color) {
 				for (screen = 0; screen < nscreens; screen++) {
 					XSetWindowBackground(dpy,
