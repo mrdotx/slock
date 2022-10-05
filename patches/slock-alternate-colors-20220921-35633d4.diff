@@ -1,6 +1,6 @@
 From 3603c02bf54df2a5309ac74639829f2393033edc Mon Sep 17 00:00:00 2001
 From: Max Schillinger <maxschillinger@web.de>
-Date:   2022-09-22T10:21:17+0200
+Date: Wed, 21 Sep 2022 20:23:16 +0200
 Subject: [PATCH] Alternate color during password input
 
 Toggle screen color between two shades of blue during password input to get

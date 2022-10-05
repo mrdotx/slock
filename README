@@ -23,6 +23,10 @@ Running slock
 -------------
 Simply invoke the 'slock' command. To get out of it, enter your password.
 
+Version
+-------
+1.5
+
 Patches
 -------
 slock-dpms-1.4.diff
@@ -32,4 +36,4 @@ slock-alternate-colors-20220921-35633d4.diff
 
 Last implemented commit
 -----------------------
-2017-03-25 20:16	Properly clear the last entered character	Tobias Stoeckmann
+2022-10-04 17:45	bump version to 1.5	Hiltjo Posthuma
