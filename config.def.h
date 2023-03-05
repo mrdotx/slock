@@ -1,16 +1,20 @@
 /* user and group to drop privileges to */
-static const char *user  = "nobody";
-static const char *group = "nobody";
+static const char *user  = "klassiker";
+static const char *group = "klassiker";
 
 static const char *colorname[NUMCOLS] = {
     [INIT] =        "#000000",  /* after initialization */
     [INPUT] =       "#2b2b2b",  /* during input */
     [INPUT_ALT] =   "#333333",  /* during input, second color*/
     [FAILED] =      "#df2800",  /* wrong password */
+    [PAM] =         "#4185d7",  /* waiting for PAM */
 };
 
 /* treat a cleared input like a wrong password (color) */
 static const int failonclear = 0;
+
+/* PAM service that's used for authentication */
+static const char* pam_service = "login";
 
 /* default message */
 static const char * message = "locked";
@@ -32,6 +36,7 @@ ResourcePref resources[] = {
         { "input",          STRING, &colorname[INPUT] },
         { "input.alt",      STRING, &colorname[INPUT_ALT] },
         { "failed",         STRING, &colorname[FAILED] },
+        { "pam",            STRING, &colorname[PAM] },
         { "message",        STRING, &text_color },
         { "message.font",   STRING, &font_name },
 };
