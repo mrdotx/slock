@@ -314,6 +314,7 @@ readpw(Display *dpy, struct xrandr *rr, struct lock **locks, int nscreens,
 				for (screen = 0; screen < nscreens; screen++) {
 					XSetWindowBackground(dpy, locks[screen]->win, locks[screen]->colors[color]);
 					XClearWindow(dpy, locks[screen]->win);
+					writemessage(dpy, locks[screen]->win, screen);
 					XRaiseWindow(dpy, locks[screen]->win);
 				}
 				XSync(dpy, False);
