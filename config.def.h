@@ -1,7 +1,3 @@
-/* user and group to drop privileges to */
-static const char *user  = "klassiker";
-static const char *group = "klassiker";
-
 static const char *colorname[NUMCOLS] = {
     [INIT] =        "#000000",  /* after initialization */
     [INPUT] =       "#2b2b2b",  /* during input */

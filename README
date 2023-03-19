@@ -34,6 +34,7 @@ slock-message-20191002-b46028b.diff
 slock-xresources-20191126-53e56c7.diff
 slock-alternate-colors-20220921-35633d4.diff
 slock-pam_auth-20190207-35633d4.diff
+slock-user-1.5.diff
 
 Last implemented commit
 -----------------------
