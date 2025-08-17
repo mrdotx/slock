@@ -1,9 +1,9 @@
 static const char *colorname[NUMCOLS] = {
-    [INIT] =        "#000000",  /* after initialization */
-    [INPUT] =       "#2b2b2b",  /* during input */
-    [INPUT_ALT] =   "#2b2b2b",  /* during input, second color*/
-    [FAILED] =      "#df2800",  /* wrong password */
-    [PAM] =         "#4185d7",  /* waiting for PAM */
+	[INIT] =        "#000000",  /* after initialization */
+	[INPUT] =       "#2b2b2b",  /* during input */
+	[INPUT_ALT] =   "#2b2b2b",  /* during input, second color*/
+	[FAILED] =      "#df2800",  /* wrong password */
+	[PAM] =         "#4185d7",  /* waiting for PAM */
 };
 
 /* treat a cleared input like a wrong password (color) */
@@ -28,11 +28,11 @@ static const int monitortime = 20;
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
-        { "init",           STRING, &colorname[INIT] },
-        { "input",          STRING, &colorname[INPUT] },
-        { "input.alt",      STRING, &colorname[INPUT_ALT] },
-        { "failed",         STRING, &colorname[FAILED] },
-        { "pam",            STRING, &colorname[PAM] },
-        { "message",        STRING, &text_color },
-        { "message.font",   STRING, &font_name },
+		{ "init",           STRING, &colorname[INIT] },
+		{ "input",          STRING, &colorname[INPUT] },
+		{ "input.alt",      STRING, &colorname[INPUT_ALT] },
+		{ "failed",         STRING, &colorname[FAILED] },
+		{ "pam",            STRING, &colorname[PAM] },
+		{ "message",        STRING, &text_color },
+		{ "message.font",   STRING, &font_name },
 };
