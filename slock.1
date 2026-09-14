@@ -1,4 +1,4 @@
-.Dd October 6, 2023
+.Dd September 5, 2026
 .Dt SLOCK 1
 .Os
 .Sh NAME
@@ -9,14 +9,9 @@
 .Op Fl v
 .Op Fl f
 .Op Fl m Ar message
-.Op Ar cmd Op Ar arg ...
 .Sh DESCRIPTION
 .Nm
 is a simple X screen locker.
-If provided,
-.Ar cmd
-is executed after the screen has been locked.
-.Pp
 The options are as follows:
 .Bl -tag -width Ds
 .It Fl v
@@ -29,10 +24,6 @@ Overrides default slock lock message.
 .El
 .Sh EXIT STATUS
 .Ex -std
-.Sh EXAMPLES
-$
-.Nm
-/usr/sbin/s2ram
 .Sh SECURITY CONSIDERATIONS
 To make sure a locked screen can not be bypassed by switching VTs
 or killing the X server with Ctrl+Alt+Backspace, it is recommended

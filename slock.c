@@ -14,7 +14,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include <spawn.h>
 #include <sys/types.h>
 #include <X11/extensions/Xrandr.h>
 #include <X11/extensions/Xinerama.h>
@@ -523,7 +522,7 @@ config_init(Display *dpy)
 static void
 usage(void)
 {
-	die("usage: slock [-v] [-f] [-m message] [cmd [arg ...]]\n");
+	die("usage: slock [-v] [-f] [-m message]\n");
 }
 
 int
@@ -626,17 +625,6 @@ main(int argc, char **argv) {
 		die("slock: DPMSSetTimeouts failed\n");
 
 	XSync(dpy, 0);
-
-	/* run post-lock command */
-	if (argc > 0) {
-		pid_t pid;
-		extern char **environ;
-		int err = posix_spawnp(&pid, argv[0], NULL, NULL, argv, environ);
-		if (err) {
-			die("slock: failed to execute post-lock command: %s: %s\n",
-			    argv[0], strerror(err));
-		}
-	}
 
 	/* everything is now blank. Wait for the correct password */
 	readpw(dpy, &rr, locks, nscreens, hash);

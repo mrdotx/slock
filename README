@@ -38,4 +38,4 @@ slock-user-1.5.diff
 
 Last implemented commit
 -----------------------
-2026-07-27 21:55	bump version to 1.7	Hiltjo Posthuma
+2026-09-05 10:20	remove support for running post lock command	Hiltjo Posthuma
