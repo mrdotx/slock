@@ -10,9 +10,13 @@ MANPREFIX = ${PREFIX}/share/man
 X11INC = /usr/X11R6/include
 X11LIB = /usr/X11R6/lib
 
+# freetype
+FREETYPELIBS = -lfontconfig -lXft
+FREETYPEINC = /usr/include/freetype2
+
 # includes and libs
-INCS = -I. -I/usr/include -I${X11INC}
-LIBS = -L/usr/lib -lc -lcrypt -L${X11LIB} -lX11 -lXext -lXrandr -lXinerama -lpam
+INCS = -I. -I/usr/include -I${X11INC} -I${FREETYPEINC}
+LIBS = -L/usr/lib -lc -lcrypt -L${X11LIB} ${FREETYPELIBS} -lX11 -lXext -lXrandr -lpam -lXinerama
 
 # flags
 CPPFLAGS = -DVERSION=\"${VERSION}\" -D_DEFAULT_SOURCE -DHAVE_SHADOW_H

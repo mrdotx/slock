@@ -1,0 +1,304 @@
+From ae7e6d53035be99c24b514cbb26005d37656d632 Mon Sep 17 00:00:00 2001
+From: Sourav Nayak <nonameblank007@gmail.com>
+Date:   2026-10-10T05:56:38+0200
+Subject: [PATCH] slock: update message patch for upcoming 1.8 version and support system fonts
+
+---
+ config.def.h |  12 ++++
+ config.mk    |   8 ++-
+ slock.1      |   7 +++
+ slock.c      | 156 +++++++++++++++++++++++++++++++++++++++++++++++++--
+ 4 files changed, 177 insertions(+), 6 deletions(-)
+
+diff --git a/config.def.h b/config.def.h
+index 9855e21..d18e03f 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -10,3 +10,15 @@ static const char *colorname[NUMCOLS] = {
+ 
+ /* treat a cleared input like a wrong password (color) */
+ static const int failonclear = 1;
++
++/* default message */
++static const char * message = "Suckless: Software that sucks less.";
++
++/* text color */
++static const char * text_color = "#ffffff";
++
++/* font name (slock -f/fc-list) */
++static const char * font_name = "monospace";
++
++/* font size (must be a valid size) */
++static const double font_size = 18.0;
+\ No newline at end of file
+diff --git a/config.mk b/config.mk
+index 9fe5bff..921834e 100644
+--- a/config.mk
++++ b/config.mk
+@@ -10,9 +10,13 @@ MANPREFIX = ${PREFIX}/share/man
+ X11INC = /usr/X11R6/include
+ X11LIB = /usr/X11R6/lib
+ 
++# freetype
++FREETYPELIBS = -lfontconfig -lXft
++FREETYPEINC = /usr/include/freetype2
++
+ # includes and libs
+-INCS = -I. -I/usr/include -I${X11INC}
+-LIBS = -L/usr/lib -lc -lcrypt -L${X11LIB} -lX11 -lXext -lXrandr
++INCS = -I. -I/usr/include -I${X11INC} -I${FREETYPEINC}
++LIBS = -L/usr/lib -lc -lcrypt -L${X11LIB} ${FREETYPELIBS} -lX11 -lXext -lXrandr -lXinerama
+ 
+ # flags
+ CPPFLAGS = -DVERSION=\"${VERSION}\" -D_DEFAULT_SOURCE -DHAVE_SHADOW_H
+diff --git a/slock.1 b/slock.1
+index e485992..66a5f97 100644
+--- a/slock.1
++++ b/slock.1
+@@ -7,6 +7,8 @@
+ .Sh SYNOPSIS
+ .Nm
+ .Op Fl v
++.Op Fl f
++.Op Fl m Ar message
+ .Sh DESCRIPTION
+ .Nm
+ is a simple X screen locker.
+@@ -14,6 +16,11 @@ The options are as follows:
+ .Bl -tag -width Ds
+ .It Fl v
+ Print version information to stdout and exit.
++.It Fl f
++List all valid X fonts and exit.
++.It Fl m
++Overrides default slock lock message.
++.TP
+ .El
+ .Sh EXIT STATUS
+ .Ex -std
+diff --git a/slock.c b/slock.c
+index 9c587e1..fe6ef5d 100644
+--- a/slock.c
++++ b/slock.c
+@@ -15,14 +15,20 @@
+ #include <unistd.h>
+ #include <sys/types.h>
+ #include <X11/extensions/Xrandr.h>
++#include <X11/extensions/Xinerama.h>
+ #include <X11/keysym.h>
+ #include <X11/Xlib.h>
+ #include <X11/Xutil.h>
++#include <X11/Xft/Xft.h>
++#include <fontconfig/fontconfig.h>
+ 
+ #include "util.h"
+ 
+ char *argv0;
+ 
++/* global count to prevent repeated error messages */
++int count_error = 0;
++
+ enum {
+ 	INIT,
+ 	INPUT,
+@@ -82,6 +88,122 @@ dontkillme(void)
+ }
+ #endif
+ 
++static void
++writemessage(Display *dpy, Window win, int screen)
++{
++	int len, line_len, line_start, width, height, s_width, s_height, i, j, k, tab_replace, tab_size;
++	XineramaScreenInfo *xsi = NULL;
++	XftFont *font = NULL;
++	XftDraw *draw;
++	XftColor color;
++	Visual *vis;
++	Colormap cmap;
++	XGlyphInfo ext;
++	char font_pattern[256];
++
++	snprintf(font_pattern, sizeof(font_pattern), "%s:size=%f:antialias=true:autohint=true",
++	         font_name, font_size);
++
++	font = XftFontOpenName(dpy, screen, font_pattern);
++	if (!font)
++		font = XftFontOpenName(dpy, screen, "monospace:size=12");
++
++	if (!font) {
++		if (count_error == 0) {
++			fprintf(stderr, "slock: Unable to load font \"%s\"\n", font_pattern);
++			fprintf(stderr, "slock: Try listing fonts with 'slock -f'\n");
++			count_error++;
++		}
++		return;
++	}
++
++	vis = DefaultVisual(dpy, screen);
++	cmap = DefaultColormap(dpy, screen);
++
++	if (!XftColorAllocName(dpy, vis, cmap, text_color, &color)) {
++		fprintf(stderr, "slock: Unable to allocate color \"%s\"\n", text_color);
++		XftFontClose(dpy, font);
++		return;
++	}
++
++	draw = XftDrawCreate(dpy, win, vis, cmap);
++	if (!draw) {
++		XftColorFree(dpy, vis, cmap, &color);
++		XftFontClose(dpy, font);
++		return;
++	}
++
++	XftTextExtentsUtf8(dpy, font, (FcChar8 *)" ", 1, &ext);
++	tab_size = 8 * (ext.xOff > 0 ? ext.xOff : 8);
++
++	len = strlen(message);
++
++	/* Max max line length (cut at '\n') */
++	line_len = 0;
++	line_start = 0;
++	k = 0;
++	for (i = j = 0; i < len; i++) {
++		if (message[i] == '\n') {
++			if (i - j > line_len) {
++				line_len = i - j;
++				line_start = j;
++			}
++			k++;
++			i++;
++			j = i;
++		}
++	}
++	if (line_len == 0) {
++		line_len = len;
++		line_start = 0;
++	}
++
++	if (XineramaIsActive(dpy)) {
++		xsi = XineramaQueryScreens(dpy, &i);
++		s_width = xsi[0].width;
++		s_height = xsi[0].height;
++	} else {
++		s_width = DisplayWidth(dpy, screen);
++		s_height = DisplayHeight(dpy, screen);
++	}
++
++	XftTextExtentsUtf8(dpy, font, (FcChar8 *)(message + line_start), line_len, &ext);
++	int line_spacing = font->ascent + font->descent + 6;
++	height = s_height * 3 / 7 - (k * line_spacing) / 3;
++	width  = (s_width - ext.xOff) / 2;
++
++	/* Look for '\n' and print the text between them. */
++	for (i = j = k = 0; i <= len; i++) {
++		/* i == len is the special case for the last line */
++		if (i == len || message[i] == '\n') {
++			tab_replace = 0;
++			while (message[j] == '\t' && j < i) {
++				tab_replace++;
++				j++;
++			}
++
++			XftDrawStringUtf8(draw, &color, font,
++			                  width + tab_size * tab_replace,
++			                  height + (k * line_spacing) + font->ascent,
++			                  (FcChar8 *)(message + j), i - j);
++
++			while (i < len && message[i] == '\n') {
++				i++;
++				j = i;
++				k++;
++			}
++		}
++	}
++
++	/* xsi should not be NULL anyway if Xinerama is active, but to be safe */
++	if (XineramaIsActive(dpy) && xsi != NULL)
++			XFree(xsi);
++
++	XftDrawDestroy(draw);
++	XftColorFree(dpy, vis, cmap, &color);
++	XftFontClose(dpy, font);
++}
++
+ static const char *
+ gethash(void)
+ {
+@@ -196,6 +318,7 @@ readpw(Display *dpy, struct xrandr *rr, struct lock **locks, int nscreens,
+ 					                     locks[screen]->win,
+ 					                     locks[screen]->colors[color]);
+ 					XClearWindow(dpy, locks[screen]->win);
++					writemessage(dpy, locks[screen]->win, screen);
+ 				}
+ 				oldc = color;
+ 			}
+@@ -302,7 +425,7 @@ lockscreen(Display *dpy, struct xrandr *rr, int screen)
+ static void
+ usage(void)
+ {
+-	die("usage: slock [-v]\n");
++	die("usage: slock [-v] [-f] [-m message]\n");
+ }
+ 
+ int
+@@ -315,11 +438,30 @@ main(int argc, char **argv) {
+ 	gid_t dgid;
+ 	const char *hash;
+ 	Display *dpy;
+-	int s, nlocks, nscreens;
++	int i, s, nlocks, nscreens;
++	FcFontSet *fs;
++	FcPattern *pat;
++	FcObjectSet *os;
+ 
+ 	if (argc > 1 && !strcmp(argv[1], "-v")) {
+ 		puts("slock-"VERSION);
+ 		return 0;
++	} else if (argc > 1 && !strcmp(argv[1], "-m")) {
++		if (argc < 3)
++			usage();
++		message = argv[2];
++	} else if (argc > 1 && !strcmp(argv[1], "-f")) {
++		if (!FcInit())
++			die("slock: Fontconfig initialization failed\n");
++		pat = FcPatternCreate();
++		os = FcObjectSetBuild(FC_FAMILY, NULL);
++		fs = FcFontList(NULL, pat, os);
++		for (i = 0; fs && i < fs->nfont; i++) {
++			FcChar8 *fam;
++			if (FcPatternGetString(fs->fonts[i], FC_FAMILY, 0, &fam) == FcResultMatch)
++				printf("%s\n", fam);
++		}
++		return 0;
+ 	} else if (argc > 1) {
+ 		usage();
+ 	}
+@@ -345,6 +487,10 @@ main(int argc, char **argv) {
+ 	if (!crypt("", hash))
+ 		die("slock: crypt: %s\n", strerror(errno));
+ 
++	/* Initialize Fontconfig cache BEFORE dropping privileges */
++	if (!FcInit())
++		die("slock: Fontconfig initialization failed\n");
++
+ 	if (!(dpy = XOpenDisplay(NULL)))
+ 		die("slock: cannot open display\n");
+ 
+@@ -364,10 +510,12 @@ main(int argc, char **argv) {
+ 	if (!(locks = calloc(nscreens, sizeof(struct lock *))))
+ 		die("slock: out of memory\n");
+ 	for (nlocks = 0, s = 0; s < nscreens; s++) {
+-		if ((locks[s] = lockscreen(dpy, &rr, s)) != NULL)
++		if ((locks[s] = lockscreen(dpy, &rr, s)) != NULL) {
++			writemessage(dpy, locks[s]->win, s);
+ 			nlocks++;
+-		else
++		} else {
+ 			break;
++		}
+ 	}
+ 	XSync(dpy, 0);
+ 
+-- 
+2.55.0
+

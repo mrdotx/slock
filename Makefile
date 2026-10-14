@@ -11,7 +11,7 @@ all: slock
 .c.o:
 	${CC} -c ${CFLAGS} $<
 
-${OBJ}: config.h config.mk arg.h util.h
+${OBJ}: config.h config.mk util.h
 
 config.h:
 	cp config.def.h $@

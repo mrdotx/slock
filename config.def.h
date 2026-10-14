@@ -19,7 +19,7 @@ static const char * message = "locked";
 static const char * text_color = "#cccccc";
 
 /* font name (must be a valid x11 front name) */
-static const char * font_name = "-misc-fixed-medium-r-normal--20-200-75-75-c-100-iso8859-1";
+static const char * font_name = "DejaVu Sans Mono:pixelsize=32";
 
 /* time in seconds before the monitor shuts down */
 static const int monitortime = 20;
